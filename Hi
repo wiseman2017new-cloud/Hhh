@@ -1,0 +1,83 @@
+(function() {
+  const delay = 100; // ms per word
+
+  // ==== Grab dictionary dynamically from existing .place div ====
+  const placeDiv = document.querySelector(".place-wrapper .place");
+  const input = document.querySelector("input[type='text']");
+  if (!placeDiv || !input) { console.warn("Input or .place div not found!"); return; }
+
+  const dict = new Set(
+    Array.from(placeDiv.querySelectorAll("span"))
+      .map(span => span.innerText.trim())
+      .filter(word => word.length > 0)
+  );
+
+  // ==== Greedy splitter ====
+  function splitWords(text) {
+    let i = 0, result = [];
+    while (i < text.length) {
+      let found = null;
+      for (let j = text.length; j > i; j--) {
+        let word = text.slice(i, j);
+        if (dict.has(word)) {
+          found = word;
+          i = j;
+          result.push(word);
+          break;
+        }
+      }
+      if (!found) { result.push(text[i]); i++; }
+    }
+    return result;
+  }
+
+  // ==== Helpers for input auto-typing ====
+  function setNativeValue(el, value) {
+    const vs = Object.getOwnPropertyDescriptor(el, "value")?.set;
+    const proto = Object.getPrototypeOf(el);
+    const pvs = Object.getOwnPropertyDescriptor(proto, "value")?.set;
+    if (pvs && vs !== pvs) pvs.call(el, value);
+    else if (vs) vs.call(el, value);
+    else el.value = value;
+  }
+
+  function pressSpace(target) {
+    const opts = { bubbles: true, cancelable: true, key: " ", code: "Space", keyCode: 32, which: 32 };
+    ["keydown", "keypress", "keyup"].forEach(type =>
+      target.dispatchEvent(new KeyboardEvent(type, opts))
+    );
+  }
+
+  // ==== Prepare words ====
+  const gluedText = placeDiv.innerText.replace(/\s+/g, "");
+  const words = splitWords(gluedText);
+
+  // Clear display div for fresh spans
+  placeDiv.innerHTML = "";
+
+  // ==== Auto-type + span display loop ====
+  let i = 0;
+  function loop() {
+    if (i >= words.length) return;
+
+    const word = words[i];
+
+    // 1️⃣ Auto-type in input
+    setNativeValue(input, word + " ");
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    pressSpace(input);
+    pressSpace(document);
+
+    // 2️⃣ Display in div with spans
+    const span = document.createElement("span");
+    span.innerText = word + " ";
+    if (dict.has(word)) span.classList.add("complete");
+    else span.classList.add("highlight");
+    placeDiv.appendChild(span);
+
+    i++;
+    setTimeout(loop, delay);
+  }
+
+  loop();
+})();
