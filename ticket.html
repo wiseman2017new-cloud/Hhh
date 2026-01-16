@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Ticket | Green Bus</title>
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="assets/css/variables.css" />
+    <link rel="stylesheet" href="assets/css/navbar.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/ticket.css" />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Barcode+128&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar no-print">
+      <div class="container nav-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-bus-alt"></i>
+          <span>GREEN BUS</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="search.html">Book Again</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="container section-padding">
+      <div class="ticket-header no-print text-center mb-4">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Booking Confirmed!</h2>
+        <p>
+          Your eco-friendly journey is all set. We've sent a copy to your email.
+        </p>
+
+        <div class="ticket-actions mt-4">
+          <button onclick="window.print()" class="btn-primary-outline">
+            <i class="fas fa-print"></i> Print Ticket
+          </button>
+          <button onclick="location.href='index.html'" class="btn-search">
+            Back to Home
+          </button>
+        </div>
+      </div>
+
+      <!-- Digital Ticket Card -->
+      <div class="ticket-container" id="printableTicket">
+        <div class="ticket-top">
+          <div class="ticket-brand">
+            <i class="fas fa-bus-alt"></i>
+            <span>GREEN BUS</span>
+          </div>
+          <div class="ticket-id">
+            <small>BOOKING ID</small>
+            <h4 id="displayBookingId">GB-000000</h4>
+          </div>
+        </div>
+
+        <div class="ticket-body">
+          <div class="route-info-strip">
+            <div class="station">
+              <h3 id="displayFrom">Source</h3>
+              <p id="displayDeparture">00:00 AM</p>
+            </div>
+            <div class="route-path">
+              <i class="fas fa-leaf"></i>
+              <div class="path-line"></div>
+            </div>
+            <div class="station text-right">
+              <h3 id="displayTo">Destination</h3>
+              <p id="displayArrival">00:00 PM</p>
+            </div>
+          </div>
+
+          <div class="ticket-details-grid">
+            <div class="detail-item">
+              <label>BUS NAME</label>
+              <p id="displayBusName">Green Express</p>
+            </div>
+            <div class="detail-item">
+              <label>DATE</label>
+              <p id="displayDate">Jan 24, 2024</p>
+            </div>
+            <div class="detail-item">
+              <label>SEAT NO(S).</label>
+              <p id="displaySeats">--</p>
+            </div>
+            <div class="detail-item">
+              <label>PASSENGER(S)</label>
+              <p id="displayPassengerNames">Loading...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-footer">
+          <div class="qr-section">
+            <!-- Simple SVG Placeholder for QR -->
+            <svg
+              width="80"
+              height="80"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M3 3h5v5H3V3zM16 3h5v5h-5V3zM3 16h5v5H3v-5zM16 16h5v5h-5v-5zM10 3h1v1h-1V3zM13 3h1v1h-1V3zM10 6h1v1h-1V6zM13 6h1v1h-1V6zM7 10h1v1H7v-1zM10 10h1v1h-1v-1zM13 10h1v1h-1v-1zM16 10h1v1h-1v-1zM19 10h1v1h-1v-1zM3 10h1v1H3v-1zM10 13h1v1h-1v-1zM13 13h1v1h-1v-1zM16 13h1v1h-1v-1zM19 13h1v1h-1v-1zM7 13h1v1H7v-1z"
+              />
+            </svg>
+            <div class="barcode-text">Scan for Boarding</div>
+          </div>
+          <div class="eco-badge">
+            <i class="fas fa-seedling"></i>
+            <div>
+              <strong>Eco-Traveler</strong>
+              <p>Thank you for choosing a carbon-neutral ride.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer no-print -->
+    <footer class="footer no-print">
+      <div class="container text-center">
+        <p>&copy; 2023 Green Bus Inc. Safe Travels!</p>
+      </div>
+    </footer>
+
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/ticket.js"></script>
+  </body>
+</html>
